@@ -16,11 +16,11 @@ institutional-grade PDF tearsheet — updated with live market data on
 every run.
 
 **Factors:**
-- **Momentum** — 12-1 month price return (skips last month to avoid reversal)
-- **Value** — inverse price-to-book ratio
-- **Quality** — return on equity
-- **Low Volatility** — negative 252-day realized volatility
-- **Size** — negative log market cap (small-cap tilt)
+- **Momentum** : 12-1 month price return (skips last month to avoid reversal)
+- **Value** : inverse price-to-book ratio
+- **Quality** : return on equity
+- **Low Volatility** : negative 252-day realized volatility
+- **Size** : negative log market cap (small-cap tilt)
 
 Each factor is cross-sectionally z-scored and winsorized at 2.5/97.5th 
 percentile. Composite score = weighted sum of z-scores.
@@ -45,14 +45,14 @@ Value +0.96σ | Size +0.11σ
 **Why the long-short underperforms despite strong factor spreads:**
 
 All 4 primary factors show >0.95σ separation between long and short 
-portfolios — the model is correctly identifying cheap, profitable, 
+portfolios : the model is correctly identifying cheap, profitable, 
 low-volatility stocks vs expensive, low-quality, high-volatility ones. 
 The underperformance comes entirely from the short leg: the model 
 correctly identifies NVDA, MSFT, META, AMZN as low-value/high-volatility 
 and shorts them — but these stocks rallied 40-80% in 2024-25 driven by 
 AI-related momentum that the value and quality factors penalize.
 
-This is a known phenomenon called **factor crowding** — when a macro 
+This is a known phenomenon called **factor crowding** : when a macro 
 theme (AI capex cycle) overwhelms cross-sectional factor signals. 
 The long-only portfolio (+9.8%) confirms the long-side factor selection 
 works; the drag is purely from the short book.
@@ -64,11 +64,11 @@ equity strategy.
 ## Streamlit app
 
 Interactive dashboard with 5 tabs:
-- **Summary** — stat cards, cumulative returns chart, strategy comparison table
-- **Monthly Returns** — calendar heatmap + drawdown chart
-- **Factor Analysis** — Q1 vs Q5 scores, factor spread attribution
-- **Current Rankings** — today's top long/short candidates with factor scores
-- **Export PDF** — generates the 3-page institutional tearsheet
+- **Summary** : stat cards, cumulative returns chart, strategy comparison table
+- **Monthly Returns** : calendar heatmap + drawdown chart
+- **Factor Analysis** : Q1 vs Q5 scores, factor spread attribution
+- **Current Rankings** : today's top long/short candidates with factor scores
+- **Export PDF** : generates the 3-page institutional tearsheet
 
 Factor weights, rebalance frequency, and transaction costs are all 
 configurable — results update on every run.
@@ -126,27 +126,27 @@ together, factor scoring is done separately within each market
 Long-short portfolios are constructed within each market independently.
 
 **Known limitations:**
-- Universe is a curated sample (172 US, 155 India) — not full index 
+- Universe is a curated sample (172 US, 155 India) : not full index 
   membership with proper inclusion/exclusion rules
 - Fundamental data from yfinance has quality gaps for smaller Indian 
-  companies — "NM" shown where unavailable
-- Backtest period (2 years) is short for factor research — 
+  companies : "NM" shown where unavailable
+- Backtest period (2 years) is short for factor research : 
   5-10 years is standard for robust conclusions
-- No benchmark hedging on the short book — 
+- No benchmark hedging on the short book : 
   pure long-short, not market-neutral
 
 ## What I learned
 
 The most interesting engineering decision was enforcing strict 
 data separation between the factor scoring step and the backtest 
-loop — it's easy to accidentally use future information when 
+loop, it's easy to accidentally use future information when 
 computing signals on historical data. The second interesting problem 
 was cross-market normalization: you can't z-score Indian and US 
 stocks together because INR/USD differences make raw fundamentals 
 incomparable, but relative rankings within each market are valid.
 
-The research finding — that factor spreads can be statistically 
-strong (+1.65σ momentum spread) while the strategy loses money — 
+The research finding- that factor spreads can be statistically 
+strong (+1.65σ momentum spread) while the strategy loses money,
 is a useful reminder that signal strength and P&L are different 
 things. A factor that correctly ranks stocks doesn't automatically 
 produce alpha if the macro environment systematically favors the 
