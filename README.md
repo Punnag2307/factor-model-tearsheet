@@ -152,4 +152,3 @@ things. A factor that correctly ranks stocks doesn't automatically
 produce alpha if the macro environment systematically favors the 
 short book.
 
----
